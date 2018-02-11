@@ -14,15 +14,15 @@ class FiguresController < ApplicationController
   end
 
   post '/figures' do
-    @figure = Figure.create(:name => params["figure[name]"])
+    @figure = Figure.create(:name => params['figure']['name'])
 
-    @figure.landmarks = params["figure[landmark_ids][]"]
-    if !params["landmark[name]"].empty?
-      @figure.landmarks << Landmark.create(name: params["landmark[name]"])
+    @figure.landmarks = params['figure']['landmark_ids']
+    if !params['landmark']['name'].empty?
+      @figure.landmarks << Landmark.create(name: params['landmark']['name']])
     end
 
     if !params["title[name]"].empty?
-      @figure.titles << Title.create(name: params["title[name]"])
+      @figure.titles << Title.create(name: params['title']['name'])
     end
 
 
