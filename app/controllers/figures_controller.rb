@@ -1,5 +1,5 @@
 class FiguresController < ApplicationController
-  # allows you to list all figures (FAILED - 6)
+  # allows you to list all figures
   get '/figures' do
     @figures = Figure.all
     erb :'/figures/index'
@@ -14,11 +14,19 @@ class FiguresController < ApplicationController
   end
 
   post '/figures' do
-    @figure = Figure.create(:name => params["Name"])
-    @figure.title = Title.find_or_create_by(:name => params["Title Name"])
-    # @figure.genre_ids = params[:genres]
+    @figure = Figure.create(:name => params["figure[name]"])
+
+    @figure.landmarks = params["figure[landmark_ids][]"]
+    if !params["landmark[name]"].empty?
+      @figure.landmarks << Landmark.create(name: params["landmark[name]"])
+    end
+
+    if !params["title[name]"].empty?
+      @figure.titles << Title.create(name: params["title[name]"])
+    end
+
+
     @figure.save
-    # flash[:message] = "Successfully created figure."
     redirect to "/figures/#{@figure.slug}"
   end
   # allows you to see a single Figure (FAILED - 7)
