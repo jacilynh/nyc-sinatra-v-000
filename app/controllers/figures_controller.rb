@@ -27,7 +27,7 @@ class FiguresController < ApplicationController
     end
 
     @figure.save
-    redirect to "/figures/#{@figure.slug}"
+    redirect to "/figures/#{@figure.id}"
   end
   # allows you to see a single Figure (FAILED - 7)
   get '/figures/:id' do
@@ -38,19 +38,19 @@ class FiguresController < ApplicationController
   # allows you to edit a single figure (FAILED - 9)
   get '/figures/:id/edit' do
     @figure = Figure.find_by_id(params[:id])
-    # @song_genres = @figure.genre_ids
     erb :'/figures/edit'
   end
 
   patch '/figures/:id' do
-    @figure = Figure.find_by_id(params[:id])
-    @figure.name.update(params["Name"])
-    # @figure.artist = Artist.find_or_create_by(params["Artist Name"])
-    # @figure.artist.update
-    # @figure.genres = Genre.find_by(params["song"]["genre_ids"])
-    # @figure.genres.update
-    # flash[:message] = "Successfully updated song."
-    redirect to "/figures/#{@figure.id}"
+    @figure = Figure.find(params[:id])
+    @figure.update(params["figure"])
+    if !params["landmark"]["name"].empty?
+      @owner.landmarks << Landmark.create(name: params["landmark"]["name"])
+    end
+    if !params["title"]["name"].empty?
+      @owner.titles << Title.create(name: params["title"]["name"])
+    end
+    redirect to "figures/#{@figure.id}"
   end
 
 end

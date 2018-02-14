@@ -1,8 +1,10 @@
 <h3>Here's your figure:</h3>
   <h6><%=@figure.name%></h6>
-    <!-- <p><a href='/figures/<%= @figure.artist.slug %>'> <%= @song.artist.name %></a></p> -->
 
-    <!-- <%@song.genres.each do |genre|%>
-    <p><a href="/genres/<%=genre.slug%>"><%= genre.name %></a></p> -->
+  <%@figure.landmarks.each do |landmark|%>
+    <p><a href="/landmarks/<%=landmark.id%>"><%= landmark.name %></a></p>
+  <%end%>
 
-    <%end%>
+  <%@figure.titles.each do |title|%>
+    <p><%= title.name %></p>
+  <%end%>
