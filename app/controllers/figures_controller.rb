@@ -30,27 +30,27 @@ class FiguresController < ApplicationController
     redirect to "/figures/#{@figure.slug}"
   end
   # allows you to see a single Figure (FAILED - 7)
-  get '/figures/:slug' do
-    @figure = Figure.find_by_slug(params[:slug])
+  get '/figures/:id' do
+    @figure = Figure.find_by_id(params[:id])
     erb :'/figures/show'
   end
   # allows you to view form to edit a single figure (FAILED - 8)
   # allows you to edit a single figure (FAILED - 9)
-  get '/figures/:slug/edit' do
-    @figure = Figure.find_by_slug(params[:slug])
+  get '/figures/:id/edit' do
+    @figure = Figure.find_by_id(params[:id])
     # @song_genres = @figure.genre_ids
     erb :'/figures/edit'
   end
 
-  patch '/figures/:slug' do
-    @figure = Figure.find_by_slug(params[:slug])
+  patch '/figures/:id' do
+    @figure = Figure.find_by_id(params[:id])
     @figure.name.update(params["Name"])
     # @figure.artist = Artist.find_or_create_by(params["Artist Name"])
     # @figure.artist.update
     # @figure.genres = Genre.find_by(params["song"]["genre_ids"])
     # @figure.genres.update
     # flash[:message] = "Successfully updated song."
-    redirect to "/figures/#{@figure.slug}"
+    redirect to "/figures/#{@figure.id}"
   end
 
 end
