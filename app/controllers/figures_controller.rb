@@ -10,21 +10,21 @@ class FiguresController < ApplicationController
   # allows you to create a new figure with a new title (FAILED - 4)
   # allows you to create a new figure with a new landmark (FAILED - 5)
   get '/figures/new' do
+    @titles = Title.all
+    @landmarks = Landmark.all
     erb :'/figures/new'
   end
 
   post '/figures' do
-    @figure = Figure.create(:name => params['figure']['name'])
+    @figure = Figure.create(params[:figure])
 
-    @figure.landmarks = params['figure']['landmark_ids']
-    if !params['landmark']['name'].empty?
-      @figure.landmarks << Landmark.create(name: params['landmark']['name']])
+    if !params["landmark"]["name"].empty?
+      @figure.landmarks << Landmark.create(name: params["landmark"]["name"])
     end
 
-    if !params["title[name]"].empty?
-      @figure.titles << Title.create(name: params['title']['name'])
+    if !params["title"]["name"].empty?
+      @figure.titles << Title.create(name: params["title"]["name"])
     end
-
 
     @figure.save
     redirect to "/figures/#{@figure.slug}"
